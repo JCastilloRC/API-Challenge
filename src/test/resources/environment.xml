@@ -1,0 +1,14 @@
+<environment>
+    <parameter>
+        <key>Browser 1</key>
+        <value>Mozilla Firefox Version 110.0.1 (64-bit)</value>
+    </parameter>
+    <parameter>
+        <key>Browser 2</key>
+        <value>Google Chrome Version 110.0.5481.178 (64-bit)</value>
+    </parameter>
+    <parameter>
+        <key>Browser 3</key>
+        <value>Microsoft Edge Version 110.0.1587.57 (64-bit)</value>
+    </parameter>
+</environment>

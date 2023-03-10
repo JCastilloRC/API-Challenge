@@ -1,0 +1,38 @@
+15:58:56.494 [main] INFO  hooks.Hooks: Creating a new session...
+15:58:56.998 [main] INFO  hooks.Hooks: The user for this session is: DetroitRC
+15:58:59.536 [main] INFO  hooks.Hooks: The session was created succesfully. ID: f1a871d5f61d7bd628884caa73a53c9e2db8ea48
+
+15:58:59.600 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Create a new List successfully'
+15:58:59.601 [main] INFO  testrunner.TestRunner: Sending a POST request to create a list with body: 
+{
+  "name": "This is my test list.",
+  "description": "Just some description",
+  "language": "en"
+}
+15:59:00.004 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
+15:59:00.053 [main] INFO  testrunner.TestRunner: List created with id: 8244017
+15:59:00.109 [main] INFO  helper.TestNGListener: Test successfully executed.
+
+15:59:00.115 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Fail trying to create a new list'
+15:59:00.115 [main] INFO  testrunner.TestRunner: Setting empty string for 'session_id' query parameter
+15:59:00.115 [main] INFO  testrunner.TestRunner: Sending a POST request to create a list with body: 
+{
+  "name": "This is my test list.",
+  "description": "Just some description",
+  "language": "en"
+}
+15:59:00.399 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
+15:59:00.426 [main] INFO  helper.TestNGListener: Test successfully executed.
+
+15:59:00.433 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Delete a List successfully'
+15:59:00.434 [main] INFO  testrunner.TestRunner: Sending a DELETE request for list with ID: 8244017
+15:59:00.790 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
+15:59:00.806 [main] ERROR helper.TestNGListener: Test Failed with message: Wrong status code
+Expected: <401>
+     but: was <500>
+
+15:59:00.813 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Fail trying to delete a nonexistent list'
+15:59:00.814 [main] INFO  testrunner.TestRunner: Sending a DELETE request for list with empty ID
+15:59:01.117 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
+15:59:01.140 [main] INFO  helper.TestNGListener: Test successfully executed.
+
