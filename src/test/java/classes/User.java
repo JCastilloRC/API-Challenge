@@ -1,12 +1,12 @@
 package classes;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import io.qameta.allure.internal.shadowed.jackson.annotation.JsonProperty;
 
 public class User {
-
     private String username;
     private String password;
-    @JsonAlias({ "api_key" })
+    @JsonAlias( {"api_key"} )
     private String apiKey;
 
     public String getUsername() {

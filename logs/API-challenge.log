@@ -1,38 +1,53 @@
-15:58:56.494 [main] INFO  hooks.Hooks: Creating a new session...
-15:58:56.998 [main] INFO  hooks.Hooks: The user for this session is: DetroitRC
-15:58:59.536 [main] INFO  hooks.Hooks: The session was created succesfully. ID: f1a871d5f61d7bd628884caa73a53c9e2db8ea48
+23:10:18.500 [main] INFO  Hooks: Creating a new session...
+23:10:18.967 [main] INFO  Hooks: The user for this session is: DetroitRC
+23:10:21.045 [main] INFO  Hooks: The session was created successfully. ID: 16a572a6a92f6f53e8772888811e6847be155286
 
-15:58:59.600 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Create a new List successfully'
-15:58:59.601 [main] INFO  testrunner.TestRunner: Sending a POST request to create a list with body: 
+23:10:21.073 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: createListHappyPath
+23:10:21.140 [main] INFO  TestRunner: Sending a POST request to create a movie list with body: 
 {
   "name": "This is my test list.",
   "description": "Just some description",
   "language": "en"
 }
-15:59:00.004 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
-15:59:00.053 [main] INFO  testrunner.TestRunner: List created with id: 8244017
-15:59:00.109 [main] INFO  helper.TestNGListener: Test successfully executed.
+23:10:21.492 [main] INFO  TestRunner: Movie list created with id: 8244105
+23:10:21.539 [main] INFO  TestRunner: Test successfully executed.
+23:10:21.539 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-15:59:00.115 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Fail trying to create a new list'
-15:59:00.115 [main] INFO  testrunner.TestRunner: Setting empty string for 'session_id' query parameter
-15:59:00.115 [main] INFO  testrunner.TestRunner: Sending a POST request to create a list with body: 
-{
-  "name": "This is my test list.",
-  "description": "Just some description",
-  "language": "en"
-}
-15:59:00.399 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
-15:59:00.426 [main] INFO  helper.TestNGListener: Test successfully executed.
+23:10:21.545 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: addMovieHappyPath
+23:10:21.550 [main] INFO  TestRunner: Sending a POST request to add movie 'Pulp Fiction' with id '680'
+23:10:21.550 [main] INFO  TestRunner: The target movie list has id '8244105'
+23:10:21.779 [main] INFO  TestRunner: Test successfully executed.
+23:10:21.779 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-15:59:00.433 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Delete a List successfully'
-15:59:00.434 [main] INFO  testrunner.TestRunner: Sending a DELETE request for list with ID: 8244017
-15:59:00.790 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
-15:59:00.806 [main] ERROR helper.TestNGListener: Test Failed with message: Wrong status code
-Expected: <401>
+23:10:21.780 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: addMovieSadPath
+23:10:21.783 [main] INFO  TestRunner: Sending a POST request to add an nonexistent movie (empty id) 
+23:10:21.783 [main] INFO  TestRunner: The target movie list has id '8244105'
+23:10:21.971 [main] INFO  TestRunner: Test successfully executed.
+23:10:21.972 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+23:10:21.972 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: createListSadPath
+23:10:21.975 [main] INFO  TestRunner: Sending a POST request to create a movie list with empty body fields
+23:10:22.336 [main] ERROR TestRunner: Test Failed with message: Wrong status message
+Expected: "Invalid parameters: Your request parameters are incorrect."
+     but: was null
+23:10:22.336 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+23:10:22.338 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: getListDetailsHappyPath
+23:10:22.340 [main] INFO  TestRunner: Sending a GET request to movie list details with id '8244105'
+23:10:22.550 [main] INFO  TestRunner: Test successfully executed.
+23:10:22.550 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+23:10:22.551 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: deleteListHappyPath
+23:10:22.553 [main] INFO  TestRunner: Sending a DELETE request for movie list with ID: 8244105
+23:10:22.754 [main] ERROR TestRunner: Test Failed with message: Wrong status code
+Expected: <201>
      but: was <500>
+23:10:22.754 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-15:59:00.813 [main] INFO  testrunner.TestRunner: - - - - - - - > START TEST CASE 'Fail trying to delete a nonexistent list'
-15:59:00.814 [main] INFO  testrunner.TestRunner: Sending a DELETE request for list with empty ID
-15:59:01.117 [main] INFO  testrunner.TestRunner: - - - - - - - > TEST CASE END
-15:59:01.140 [main] INFO  helper.TestNGListener: Test successfully executed.
+23:10:22.756 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: deleteListSadPath
+23:10:22.760 [main] INFO  TestRunner: - - - - - - - > START TEST CASE 'Delete movieList sad path'
+23:10:22.760 [main] INFO  TestRunner: Sending a DELETE request for movie list with empty ID (not yet created)
+23:10:22.897 [main] INFO  TestRunner: Test successfully executed.
+23:10:22.897 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
+23:10:22.935 [main] INFO  TestRunner: Test run: 7, Passed: 5, Failures: 2, Skipped: 0
