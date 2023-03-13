@@ -3,18 +3,11 @@ package helper;
 import classes.Movie;
 import classes.MovieList;
 import classes.User;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.restassured.response.Response;
 import org.apache.commons.io.FileUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;// in play 2.3
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-
 
 public class Helper {
 

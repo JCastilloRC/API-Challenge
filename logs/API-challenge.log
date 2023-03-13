@@ -1,53 +1,88 @@
-23:10:18.500 [main] INFO  Hooks: Creating a new session...
-23:10:18.967 [main] INFO  Hooks: The user for this session is: DetroitRC
-23:10:21.045 [main] INFO  Hooks: The session was created successfully. ID: 16a572a6a92f6f53e8772888811e6847be155286
+00:09:18.982 [main] INFO  Hooks: Creating a new session...
+00:09:19.390 [main] INFO  Hooks: The user for this session is: DetroitRC
+00:09:21.814 [main] INFO  Hooks: The session was created successfully. ID: a54cb9b5c95d9ad0601bda1b2bd10b094e4347ff
 
-23:10:21.073 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: createListHappyPath
-23:10:21.140 [main] INFO  TestRunner: Sending a POST request to create a movie list with body: 
+00:09:21.814 [main] INFO  Hooks: Initializing test data
+00:09:21.856 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: createListHappyPath
+00:09:21.889 [main] INFO  TestRunner: Sending a POST request to create a movie list with body: 
 {
   "name": "This is my test list.",
   "description": "Just some description",
   "language": "en"
 }
-23:10:21.492 [main] INFO  TestRunner: Movie list created with id: 8244105
-23:10:21.539 [main] INFO  TestRunner: Test successfully executed.
-23:10:21.539 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:22.398 [main] INFO  TestRunner: Movie list created with id: 8244407
+00:09:22.448 [main] INFO  TestRunner: Test successfully executed.
+00:09:22.448 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:21.545 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: addMovieHappyPath
-23:10:21.550 [main] INFO  TestRunner: Sending a POST request to add movie 'Pulp Fiction' with id '680'
-23:10:21.550 [main] INFO  TestRunner: The target movie list has id '8244105'
-23:10:21.779 [main] INFO  TestRunner: Test successfully executed.
-23:10:21.779 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:22.454 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: addMovieHappyPath
+00:09:22.457 [main] INFO  TestRunner: Sending a POST request to add movie 'Pulp Fiction' with id '680'
+00:09:22.457 [main] INFO  TestRunner: The target movie list has id '8244407'
+00:09:22.855 [main] INFO  TestRunner: Test successfully executed.
+00:09:22.855 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:21.780 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: addMovieSadPath
-23:10:21.783 [main] INFO  TestRunner: Sending a POST request to add an nonexistent movie (empty id) 
-23:10:21.783 [main] INFO  TestRunner: The target movie list has id '8244105'
-23:10:21.971 [main] INFO  TestRunner: Test successfully executed.
-23:10:21.972 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:22.856 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: addMovieSadPath
+00:09:22.859 [main] INFO  TestRunner: Sending a POST request to add an nonexistent movie (empty id) 
+00:09:22.860 [main] INFO  TestRunner: The target movie list has id '8244407'
+00:09:23.160 [main] INFO  TestRunner: Test successfully executed.
+00:09:23.161 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:21.972 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: createListSadPath
-23:10:21.975 [main] INFO  TestRunner: Sending a POST request to create a movie list with empty body fields
-23:10:22.336 [main] ERROR TestRunner: Test Failed with message: Wrong status message
+00:09:23.162 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: createListSadPath
+00:09:23.166 [main] INFO  TestRunner: Sending a POST request to create a movie list with empty body fields
+00:09:23.476 [main] ERROR TestRunner: Test Failed with message: Wrong status message
 Expected: "Invalid parameters: Your request parameters are incorrect."
      but: was null
-23:10:22.336 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:23.477 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:22.338 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: getListDetailsHappyPath
-23:10:22.340 [main] INFO  TestRunner: Sending a GET request to movie list details with id '8244105'
-23:10:22.550 [main] INFO  TestRunner: Test successfully executed.
-23:10:22.550 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:23.479 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: getListDetailsHappyPath
+00:09:23.481 [main] INFO  TestRunner: Sending a GET request to movie list details with id '8244407'
+00:09:23.823 [main] INFO  TestRunner: Test successfully executed.
+00:09:23.823 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:22.551 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: deleteListHappyPath
-23:10:22.553 [main] INFO  TestRunner: Sending a DELETE request for movie list with ID: 8244105
-23:10:22.754 [main] ERROR TestRunner: Test Failed with message: Wrong status code
+00:09:23.824 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: clearListHappyPath
+00:09:23.827 [main] INFO  TestRunner: Sending a POST request to clear movie list with ID '8244407'
+00:09:24.121 [main] INFO  TestRunner: Test successfully executed.
+00:09:24.121 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:24.123 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: clearListSadPath
+00:09:24.127 [main] INFO  TestRunner: Sending a GET request to movie list details with empty ID (not created)
+00:09:24.416 [main] INFO  TestRunner: Test successfully executed.
+00:09:24.416 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:24.417 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: deleteListHappyPath
+00:09:24.420 [main] INFO  TestRunner: Sending a DELETE request for movie list with ID: 8244407
+00:09:24.697 [main] ERROR TestRunner: Test Failed with message: Wrong status code
 Expected: <201>
      but: was <500>
-23:10:22.754 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:24.697 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:22.756 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: deleteListSadPath
-23:10:22.760 [main] INFO  TestRunner: - - - - - - - > START TEST CASE 'Delete movieList sad path'
-23:10:22.760 [main] INFO  TestRunner: Sending a DELETE request for movie list with empty ID (not yet created)
-23:10:22.897 [main] INFO  TestRunner: Test successfully executed.
-23:10:22.897 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+00:09:24.698 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: deleteListSadPath
+00:09:24.700 [main] INFO  TestRunner: Sending a DELETE request for movie list with empty ID (not yet created)
+00:09:24.978 [main] INFO  TestRunner: Test successfully executed.
+00:09:24.978 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
 
-23:10:22.935 [main] INFO  TestRunner: Test run: 7, Passed: 5, Failures: 2, Skipped: 0
+00:09:24.979 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: getListDetailsSadPath
+00:09:24.981 [main] INFO  TestRunner: Sending a GET request to movie list details with empty ID (not created)
+00:09:25.243 [main] INFO  TestRunner: Test successfully executed.
+00:09:25.243 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:25.244 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: getMovieDetailsHappyPath
+00:09:25.246 [main] INFO  TestRunner: Sending a GET request for details of movie 'Pulp Fiction'
+00:09:25.504 [main] INFO  TestRunner: Test successfully executed.
+00:09:25.504 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:25.505 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: getMovieDetailsSadPath
+00:09:25.507 [main] INFO  TestRunner: Sending a GET request for details of movie 'Pulp Fiction'
+00:09:25.767 [main] INFO  TestRunner: Test successfully executed.
+00:09:25.767 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:25.768 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: ratingMovieHappyPath
+00:09:25.771 [main] INFO  TestRunner: Sending a POST request for rating movie 'Pulp Fiction' 9.5/10
+00:09:26.054 [main] INFO  TestRunner: Test successfully executed.
+00:09:26.054 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:26.055 [main] INFO  TestRunner: - - - - - - - > START TEST CASE: ratingMovieSadPath
+00:09:26.057 [main] INFO  TestRunner: Sending a POST request for rating movie 'Pulp Fiction' -10/10
+00:09:26.404 [main] INFO  TestRunner: Test successfully executed.
+00:09:26.405 [main] INFO  TestRunner: - - - - - - - > TEST CASE END 
+
+00:09:26.447 [main] INFO  TestRunner: Test run: 14, Passed: 12, Failures: 2, Skipped: 0

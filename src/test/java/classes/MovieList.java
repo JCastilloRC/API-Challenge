@@ -28,7 +28,7 @@ public class MovieList {
         description = "";
         language = "";
         id = "";
-        movies = new ArrayList<Movie>();
+        movies = new ArrayList<>();
     }
 
     public String getId() {
@@ -52,7 +52,7 @@ public class MovieList {
 
     public Response createList(Session session){
         String body = getNewListBody();
-        Response response = given().
+        Response response = given().log().all().
                                     header("Content-Type", "application/json;charset=utf-8").
                                     queryParam("api_key", session.getCurrentUser().getApiKey()).
                                     queryParam("session_id",session.getId()).
@@ -60,26 +60,29 @@ public class MovieList {
                                     body(body).
                             when().
                                     post("/list").
-                            then().
+                            then().log().all().
                                     extract().response();
         this.id = response.jsonPath().getString("list_id");
+        if(this.id == null){
+            id = "";
+        }
         return response;
     }
     public Response getDetails(Session session){
-        return  given().
+        return  given().log().all().
                         header("Content-Type", "application/json;charset=utf-8").
                         queryParam("api_key", session.getCurrentUser().getApiKey()).
                         queryParam("language","en-US").
                         pathParam("list_id", id).
                 when().
                         get("list/{list_id}").
-                then().
+                then().log().all().
                         extract().response();
     }
     public Response addMovie(Session session, Movie movie){
         String addMovieBody = getAddMovieBody(movie);
         movies.add(movie);
-        return  given().
+        return  given().log().all().
                         header("Content-Type", "application/json;charset=utf-8").
                         queryParam("api_key", session.getCurrentUser().getApiKey()).
                         queryParam("session_id",session.getId()).
@@ -88,18 +91,32 @@ public class MovieList {
                         body(addMovieBody).
                 when().
                         post("list/{list_id}/add_item").
-                then().
+                then().log().all().
                         extract().response();
     }
+
+    public Response clearList(Session session){
+        return  given().log().all().
+                        header("Content-Type", "application/json;charset=utf-8").
+                        queryParam("api_key", session.getCurrentUser().getApiKey()).
+                        queryParam("session_id",session.getId()).
+                        queryParam("confirm", true).
+                        pathParam("list_id", id).
+                when().
+                        post("list/{list_id}/clear").
+                then().log().all().
+                        extract().response();
+    }
+
     public Response deleteList(Session session){
-        Response response = given().
+        Response response = given().log().all().
                                     header("Content-Type", "application/json;charset=utf-8").
                                     queryParam("api_key", session.getCurrentUser().getApiKey()).
                                     queryParam("session_id",session.getId()).
                                     pathParam("list_id", id).
                             when().
                                     delete("list/{list_id}").
-                            then().
+                            then().log().all().
                                     extract().response();
         name = "";
         description = "";

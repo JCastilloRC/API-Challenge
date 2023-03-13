@@ -1,7 +1,5 @@
 package classes;
-
 import com.fasterxml.jackson.annotation.JsonAlias;
-import io.qameta.allure.internal.shadowed.jackson.annotation.JsonProperty;
 
 public class User {
     private String username;
@@ -12,7 +10,6 @@ public class User {
     public String getUsername() {
         return username;
     }
-
     public String getPassword() {
         return password;
     }
@@ -20,5 +17,4 @@ public class User {
     public String getApiKey() {
         return apiKey;
     }
-
 }

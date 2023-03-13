@@ -1,5 +1,4 @@
 package testrunner;
-import classes.MovieList;
 import classes.Movie;
 import helper.Helper;
 import helper.TestNGListener;
@@ -21,16 +20,11 @@ import static org.hamcrest.Matchers.greaterThan;
 @Listeners(TestNGListener.class)
 public class TestRunner extends Hooks {
     private static final Logger LOGGER = LogManager.getLogger("TestRunner");
-    private static final String NEW_LIST_BODY_PATH = "testdata\\newlist.json";
-    private static final String MOVIE_PATH = "testdata\\movie.json";
-    private MovieList movieList;
-    private Movie movie;
 
     @Test(groups = "ListCreation")
     @Description("Create a new movie list successfully")
     @Feature("Lists")
     public void createListHappyPath() throws IOException {
-        movieList = Helper.parseListJson(NEW_LIST_BODY_PATH);
         LOGGER.info("Sending a POST request to create a movie list with body: \n" + Helper.getBodyFromFile(NEW_LIST_BODY_PATH));
         Response response = movieList.createList(session);
         assertThat("Wrong status code",
@@ -47,7 +41,6 @@ public class TestRunner extends Hooks {
     @Description("Trying to create a new movieList unsuccessfully")
     @Feature("Lists")
     public void createListSadPath(){
-        MovieList errorMovieList = new MovieList();
         LOGGER.info("Sending a POST request to create a movie list with empty body fields");
         Response response = errorMovieList.createList(session);
         assertThat("Wrong status code",
@@ -62,8 +55,7 @@ public class TestRunner extends Hooks {
     @Test(groups = "AddMovie",dependsOnGroups = "ListCreation")
     @Description("Adding movie to a movie list successfully")
     @Feature("Lists")
-    public void addMovieHappyPath() throws IOException {
-        movie = Helper.parseMovieJson(MOVIE_PATH);
+    public void addMovieHappyPath(){
         LOGGER.info("Sending a POST request to add movie '"+movie.getName()+"' with id '" +movie.getId() +"'");
         LOGGER.info("The target movie list has id '"+ movieList.getId()+"'");
         Response response = movieList.addMovie(session, movie);
@@ -93,10 +85,10 @@ public class TestRunner extends Hooks {
                 equalTo("The resource you requested could not be found.")
         );
     }
-    @Test(groups = "ViewDetails",dependsOnGroups = {"ListCreation", "AddMovie"} )
+    @Test(groups = "ViewDetails",dependsOnGroups = {"AddMovie"} )
     @Description("Getting the details of a movieList successfully ")
     @Feature("Lists")
-    public void getListDetailsHappyPath() throws IOException {
+    public void getListDetailsHappyPath(){
         LOGGER.info("Sending a GET request to movie list details with id '" + movieList.getId() +"'");
         Response response = movieList.getDetails(session);
         List <Movie> moviesFromList = response.jsonPath().getList("items", Movie.class);
@@ -122,10 +114,55 @@ public class TestRunner extends Hooks {
         );
         assertThat("Movie ID from list does not match to movie previously added",
                 moviesFromList.get(0).getId(),
-                equalTo(movie.getId())
+                equalTo(movieList.getMovies().get(0).getId())
         );
     }
-    @Test(dependsOnGroups = {"ListCreation", "ViewDetails"} )
+    @Test(dependsOnGroups = {"AddMovie"} )
+    @Description("Trying to get the details of a nonexistent list")
+    @Feature("Lists")
+    public void getListDetailsSadPath(){
+        LOGGER.info("Sending a GET request to movie list details with empty ID (not created)");
+        Response response = errorMovieList.getDetails(session);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(404)
+        );
+        assertThat("Wrong status message",
+                response.jsonPath().getString("status_message"),
+                equalTo("The resource you requested could not be found.")
+        );
+    }
+    @Test(groups = "ClearList",dependsOnGroups = {"ViewDetails"} )
+    @Description("Clearing a list successfully")
+    @Feature("Lists")
+    public void clearListHappyPath(){
+        LOGGER.info("Sending a POST request to clear movie list with ID '" + movieList.getId()+"'");
+        Response response = movieList.clearList(session);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(201)
+        );
+        assertThat("Wrong status message",
+                response.jsonPath().getString("status_message"),
+                equalTo("The item/record was updated successfully.")
+        );
+    }
+    @Test(dependsOnGroups = {"ViewDetails"} )
+    @Description("Trying to clear a nonexistent list")
+    @Feature("Lists")
+    public void clearListSadPath(){
+        LOGGER.info("Sending a GET request to movie list details with empty ID (not created)");
+        Response response = errorMovieList.clearList(session);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(404)
+        );
+        assertThat("Wrong status message",
+                response.jsonPath().getString("status_message"),
+                equalTo("The resource you requested could not be found.")
+        );
+    }
+    @Test(dependsOnGroups = {"ClearList"} )
     @Description("Delete a movieList successfully")
     @Feature("Lists")
     public void deleteListHappyPath(){
@@ -140,11 +177,10 @@ public class TestRunner extends Hooks {
                 equalTo("The item/record was updated successfully.")
         );
     }
-    @Test(dependsOnGroups = {"ListCreation", "ViewDetails"} )
+    @Test(dependsOnGroups = {"ClearList"} )
     @Description("Trying to delete a movie list unsuccessfully")
     @Feature("Lists")
     public void deleteListSadPath(){
-        MovieList errorMovieList = new MovieList();LOGGER.info("- - - - - - - > START TEST CASE 'Delete movieList sad path'");
         LOGGER.info("Sending a DELETE request for movie list with empty ID (not yet created)");
         Response response = errorMovieList.deleteList(session);
         assertThat("Wrong status code",
@@ -154,6 +190,70 @@ public class TestRunner extends Hooks {
         assertThat("Wrong status message",
                 response.jsonPath().getString("status_message"),
                 equalTo("The resource you requested could not be found.")
+        );
+    }
+    @Test
+    @Description("Getting the details of a movie")
+    @Feature("Movies")
+    public void getMovieDetailsHappyPath(){
+        LOGGER.info("Sending a GET request for details of movie '" + movie.getName()+"'");
+        Response response = movie.getDetails(session);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(200)
+        );
+        assertThat("The movie name doesn't match",
+                response.jsonPath().getString("title"),
+                equalTo(movie.getName())
+        );
+        assertThat("The movie ID doesn't match",
+                response.jsonPath().getInt("id"),
+                equalTo(movie.getId())
+        );
+    }
+    @Test
+    @Description("Trying to get the details of a nonexistent movie")
+    @Feature("Movies")
+    public void getMovieDetailsSadPath(){
+        LOGGER.info("Sending a GET request for details of movie '" + movie.getName()+"'");
+        Response response = errorMovie.getDetails(session);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(404)
+        );
+        assertThat("Wrong status message",
+                response.jsonPath().getString("status_message"),
+                equalTo("The resource you requested could not be found.")
+        );
+    }
+    @Test
+    @Description("Rating a movie with 9.5 score")
+    @Feature("Movies")
+    public void ratingMovieHappyPath(){
+        LOGGER.info("Sending a POST request for rating movie '" + movie.getName()+"' 9.5/10");
+        Response response = movie.rateMovie(session, 9.5F);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(201)
+        );
+        assertThat("Wrong status message",
+                response.jsonPath().getString("status_message"),
+                equalTo("The item/record was updated successfully.")
+        );
+    }
+    @Test
+    @Description("Trying to rate a movie with invalid score")
+    @Feature("Movies")
+    public void ratingMovieSadPath(){
+        LOGGER.info("Sending a POST request for rating movie '" + movie.getName()+"' -10/10");
+        Response response = movie.rateMovie(session, -10);
+        assertThat("Wrong status code",
+                response.getStatusCode(),
+                equalTo(400)
+        );
+        assertThat("Wrong status message",
+                response.jsonPath().getString("status_message"),
+                equalTo("Value too low: Value must be greater than 0.0.")
         );
     }
 }
